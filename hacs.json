@@ -1,0 +1,9 @@
+{
+    "name": "Calculator Card",
+    "content_in_root": false,
+    "filename": "calculator-card.js",
+    "render_readme": true,
+    "country": [
+        "US"
+    ]
+}
