@@ -2,7 +2,9 @@
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 
-A custom Lovelace card for Home Assistant displaying "Hello World".
+A simple calculator for your dashboard.
+
+![Calculator Card](.github/assets/screenshot.png)
 
 ## Installation
 
