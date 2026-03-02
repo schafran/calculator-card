@@ -274,8 +274,19 @@ export class CalculatorCard extends LitElement {
 }
 
 // Register the card
-(window as any).customCards = (window as any).customCards || [];
-(window as any).customCards.push({
+interface CustomCardEntry {
+  type: string;
+  name: string;
+  description: string;
+}
+
+interface CustomCardWindow extends Window {
+  customCards?: CustomCardEntry[];
+}
+
+const customWindow = window as CustomCardWindow;
+customWindow.customCards = customWindow.customCards || [];
+customWindow.customCards.push({
   type: "calculator-card",
   name: "Calculator Card",
   description: "A custom calculator card for Home Assistant",

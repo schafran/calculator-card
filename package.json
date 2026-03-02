@@ -4,9 +4,11 @@
     "description": "A custom Home Assistant dashboard card",
     "main": "dist/calculator-card.js",
     "scripts": {
-        "build": "rollup -c",
+        "build": "npm run lint && rollup -c",
         "dev": "rollup -c --watch",
-        "lint": "eslint src --ext .ts"
+        "lint": "eslint src --ext .ts",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "format:check": "prettier --check \"src/**/*.ts\""
     },
     "keywords": [
         "home-assistant",
@@ -25,6 +27,7 @@
         "@typescript-eslint/eslint-plugin": "^6.21.0",
         "@typescript-eslint/parser": "^6.21.0",
         "eslint": "^8.56.0",
+        "prettier": "^3.2.5",
         "rollup": "^4.9.6",
         "rollup-plugin-livereload": "^2.0.5",
         "rollup-plugin-serve": "^3.0.0",
