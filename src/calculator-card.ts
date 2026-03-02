@@ -1,13 +1,27 @@
+import * as packageJson from "../package.json";
 import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { HomeAssistant, LovelaceCardConfig } from "custom-card-helpers";
+import { HomeAssistant } from "custom-card-helpers";
+import { CalculatorCardConfig } from "./types";
+import { CARD_NAME } from "./consts";
 
-interface CalculatorCardConfig extends LovelaceCardConfig {
-  type: string;
-  title?: string;
-}
+console.info(
+  `%c ${CARD_NAME.toUpperCase()} %c ${packageJson.version}`,
+  "color: orange; font-weight: bold; background: black",
+  "color: white; font-weight: bold; background: dimgray",
+);
 
-@customElement("calculator-card")
+/* eslint-disable @typescript-eslint/no-explicit-any */
+(window as any).customCards = (window as any).customCards || [];
+(window as any).customCards.push({
+  type: "calculator-card",
+  name: "Calculator Card",
+  preview: false,
+  description: "A custom calculator card for Home Assistant",
+});
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+@customElement(CARD_NAME)
 export class CalculatorCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
   @state() private config!: CalculatorCardConfig;
@@ -27,6 +41,10 @@ export class CalculatorCard extends LitElement {
       throw new Error("Invalid configuration");
     }
     this.config = config;
+  }
+
+  public getCardSize(): number {
+    return 3;
   }
 
   private handleNumberClick(num: string): void {
@@ -267,34 +285,4 @@ export class CalculatorCard extends LitElement {
       }
     `;
   }
-
-  public getCardSize(): number {
-    return 3;
-  }
 }
-
-// Register the card
-interface CustomCardEntry {
-  type: string;
-  name: string;
-  description: string;
-}
-
-interface CustomCardWindow extends Window {
-  customCards?: CustomCardEntry[];
-}
-
-const customWindow = window as CustomCardWindow;
-customWindow.customCards = customWindow.customCards || [];
-customWindow.customCards.push({
-  type: "calculator-card",
-  name: "Calculator Card",
-  description: "A custom calculator card for Home Assistant",
-});
-
-// Add to console for debugging
-console.info(
-  `%c  CALCULATOR-CARD  \n%c   Version 0.1.0   `,
-  "color: orange; font-weight: bold; background: black",
-  "color: white; font-weight: bold; background: dimgray",
-);
