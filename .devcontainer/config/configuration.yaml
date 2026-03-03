@@ -1,0 +1,12 @@
+default_config:
+demo:
+homeassistant_alerts:
+  enabled: false
+
+lovelace:
+  mode: storage
+  dashboards:
+    lovelace-yaml:
+      mode: yaml
+      title: Calculator
+      filename: lovelace.yaml

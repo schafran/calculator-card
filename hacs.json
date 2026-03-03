@@ -1,5 +1,5 @@
 {
-    "name": "Calculator Card",
-    "content_in_root": false,
-    "filename": "calculator-card.js"
+  "name": "Calculator Card",
+  "render_readme": true,
+  "filename": "calculator-card.js"
 }
