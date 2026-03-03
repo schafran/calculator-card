@@ -1,0 +1,9 @@
+views:
+  - theme: Backend-selected
+    title: Calculator
+    path: calculator
+    icon: mdi:car-sports
+    subview: false
+    badges: []
+    cards:
+      - type: custom:calculator-card

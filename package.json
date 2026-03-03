@@ -1,42 +1,54 @@
 {
-    "name": "calculator-card",
-    "version": "0.1.0",
-    "description": "A custom Home Assistant dashboard card",
-    "main": "dist/calculator-card.js",
-    "scripts": {
-        "build": "npm run lint && rollup -c",
-        "dev": "rollup -c --watch",
-        "lint": "eslint src --ext .ts",
-        "format": "prettier --write \"src/**/*.ts\"",
-        "format:check": "prettier --check \"src/**/*.ts\""
-    },
-    "keywords": [
-        "home-assistant",
-        "lovelace",
-        "custom-card",
-        "hacs"
-    ],
-    "author": "",
-    "license": "MIT",
-    "devDependencies": {
-        "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-json": "^6.1.0",
-        "@rollup/plugin-node-resolve": "^15.2.3",
-        "@rollup/plugin-terser": "^0.4.4",
-        "@rollup/plugin-typescript": "^11.1.6",
-        "@typescript-eslint/eslint-plugin": "^6.21.0",
-        "@typescript-eslint/parser": "^6.21.0",
-        "eslint": "^8.56.0",
-        "prettier": "^3.2.5",
-        "rollup": "^4.9.6",
-        "rollup-plugin-livereload": "^2.0.5",
-        "rollup-plugin-serve": "^3.0.0",
-        "tslib": "^2.6.2",
-        "typescript": "^5.3.3"
-    },
-    "dependencies": {
-        "custom-card-helpers": "^1.9.0",
-        "home-assistant-js-websocket": "^9.1.0",
-        "lit": "^3.1.2"
-    }
+  "name": "calculator-card",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A custom Home Assistant dashboard card",
+  "main": "dist/calculator-card.js",
+  "module": "boilerplate-card.js",
+  "scripts": {
+    "start": "rollup -c rollup.config.dev.js --watch",
+    "build": "yarn clean && yarn lint && yarn rollup",
+    "clean": "rm -rf dist",
+    "lint": "eslint src/**/*.ts",
+    "rollup": "rollup -c"
+  },
+  "keywords": [
+    "home-assistant",
+    "lovelace",
+    "custom-card",
+    "hacs"
+  ],
+  "author": "Frank Schaufelberger",
+  "repository": "git@github.com:schafran/calculator-card.git",
+  "license": "MIT",
+  "dependencies": {
+    "@lit-labs/context": "0.4.1",
+    "@lit-labs/motion": "1.0.7",
+    "@lit-labs/observers": "2.0.2",
+    "@lit-labs/virtualizer": "2.0.12",
+    "custom-card-helpers": "2.0.0",
+    "home-assistant-js-websocket": "9.6.0",
+    "lit": "^3.3.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.0",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "rollup": "^4.20.0",
+    "rollup-plugin-css-only": "^4.5.5",
+    "rollup-plugin-esbuild": "^6.2.1",
+    "rollup-plugin-serve": "^1.1.1",
+    "tslib": "^2.6.0",
+    "typescript": "^5.9.3"
+  }
 }

@@ -1,23 +1,23 @@
-import * as packageJson from "../package.json";
-import { LitElement, html, css } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
-import { HomeAssistant } from "custom-card-helpers";
-import { CalculatorCardConfig } from "./types";
-import { CARD_NAME } from "./consts";
+import * as packageJson from '../package.json';
+import { LitElement, html, css } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+import { HomeAssistant } from 'custom-card-helpers';
+import { CalculatorCardConfig } from './types';
+import { CARD_NAME } from './consts';
 
 console.info(
   `%c ${CARD_NAME.toUpperCase()} %c ${packageJson.version}`,
-  "color: orange; font-weight: bold; background: black",
-  "color: white; font-weight: bold; background: dimgray",
+  'color: orange; font-weight: bold; background: black',
+  'color: white; font-weight: bold; background: dimgray',
 );
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 (window as any).customCards = (window as any).customCards || [];
 (window as any).customCards.push({
-  type: "calculator-card",
-  name: "Calculator Card",
+  type: 'calculator-card',
+  name: 'Calculator Card',
   preview: false,
-  description: "A custom calculator card for Home Assistant",
+  description: 'A custom calculator card for Home Assistant',
 });
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
@@ -25,20 +25,20 @@ console.info(
 export class CalculatorCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
   @state() private config!: CalculatorCardConfig;
-  @state() private display: string = "0";
+  @state() private display: string = '0';
   @state() private firstOperand: number | null = null;
   @state() private operator: string | null = null;
   @state() private waitingForOperand: boolean = false;
 
   static getStubConfig(): CalculatorCardConfig {
     return {
-      type: "custom:calculator-card",
+      type: 'custom:calculator-card',
     };
   }
 
   public setConfig(config: CalculatorCardConfig): void {
     if (!config) {
-      throw new Error("Invalid configuration");
+      throw new Error('Invalid configuration');
     }
     this.config = config;
   }
@@ -52,7 +52,7 @@ export class CalculatorCard extends LitElement {
       this.display = num;
       this.waitingForOperand = false;
     } else {
-      this.display = this.display === "0" ? num : this.display + num;
+      this.display = this.display === '0' ? num : this.display + num;
     }
   }
 
@@ -62,11 +62,7 @@ export class CalculatorCard extends LitElement {
     if (this.firstOperand === null) {
       this.firstOperand = inputValue;
     } else if (this.operator) {
-      const result = this.calculate(
-        this.firstOperand,
-        inputValue,
-        this.operator,
-      );
+      const result = this.calculate(this.firstOperand, inputValue, this.operator);
       this.display = String(result);
       this.firstOperand = result;
     }
@@ -75,19 +71,15 @@ export class CalculatorCard extends LitElement {
     this.operator = nextOperator;
   }
 
-  private calculate(
-    firstOperand: number,
-    secondOperand: number,
-    operator: string,
-  ): number {
+  private calculate(firstOperand: number, secondOperand: number, operator: string): number {
     switch (operator) {
-      case "+":
+      case '+':
         return firstOperand + secondOperand;
-      case "-":
+      case '-':
         return firstOperand - secondOperand;
-      case "×":
+      case '×':
         return firstOperand * secondOperand;
-      case "÷":
+      case '÷':
         return secondOperand !== 0 ? firstOperand / secondOperand : 0;
       default:
         return secondOperand;
@@ -97,11 +89,7 @@ export class CalculatorCard extends LitElement {
   private handleEquals(): void {
     if (this.operator && this.firstOperand !== null) {
       const inputValue = parseFloat(this.display);
-      const result = this.calculate(
-        this.firstOperand,
-        inputValue,
-        this.operator,
-      );
+      const result = this.calculate(this.firstOperand, inputValue, this.operator);
       this.display = String(result);
       this.firstOperand = null;
       this.operator = null;
@@ -110,7 +98,7 @@ export class CalculatorCard extends LitElement {
   }
 
   private handleClear(): void {
-    this.display = "0";
+    this.display = '0';
     this.firstOperand = null;
     this.operator = null;
     this.waitingForOperand = false;
@@ -118,10 +106,10 @@ export class CalculatorCard extends LitElement {
 
   private handleDecimal(): void {
     if (this.waitingForOperand) {
-      this.display = "0.";
+      this.display = '0.';
       this.waitingForOperand = false;
-    } else if (this.display.indexOf(".") === -1) {
-      this.display = this.display + ".";
+    } else if (this.display.indexOf('.') === -1) {
+      this.display = this.display + '.';
     }
   }
 
@@ -136,73 +124,26 @@ export class CalculatorCard extends LitElement {
           <div class="calculator">
             <div class="display">${this.display}</div>
             <div class="buttons">
-              <button class="btn btn-clear" @click=${this.handleClear}>
-                C
-              </button>
-              <button
-                class="btn btn-operator"
-                @click=${() => this.handleOperatorClick("÷")}
-              >
-                ÷
-              </button>
+              <button class="btn btn-clear" @click=${this.handleClear}>C</button>
+              <button class="btn btn-operator" @click=${() => this.handleOperatorClick('÷')}>÷</button>
 
-              <button class="btn" @click=${() => this.handleNumberClick("7")}>
-                7
-              </button>
-              <button class="btn" @click=${() => this.handleNumberClick("8")}>
-                8
-              </button>
-              <button class="btn" @click=${() => this.handleNumberClick("9")}>
-                9
-              </button>
-              <button
-                class="btn btn-operator"
-                @click=${() => this.handleOperatorClick("×")}
-              >
-                ×
-              </button>
+              <button class="btn" @click=${() => this.handleNumberClick('7')}>7</button>
+              <button class="btn" @click=${() => this.handleNumberClick('8')}>8</button>
+              <button class="btn" @click=${() => this.handleNumberClick('9')}>9</button>
+              <button class="btn btn-operator" @click=${() => this.handleOperatorClick('×')}>×</button>
 
-              <button class="btn" @click=${() => this.handleNumberClick("4")}>
-                4
-              </button>
-              <button class="btn" @click=${() => this.handleNumberClick("5")}>
-                5
-              </button>
-              <button class="btn" @click=${() => this.handleNumberClick("6")}>
-                6
-              </button>
-              <button
-                class="btn btn-operator"
-                @click=${() => this.handleOperatorClick("-")}
-              >
-                −
-              </button>
-              <button class="btn" @click=${() => this.handleNumberClick("1")}>
-                1
-              </button>
-              <button class="btn" @click=${() => this.handleNumberClick("2")}>
-                2
-              </button>
-              <button class="btn" @click=${() => this.handleNumberClick("3")}>
-                3
-              </button>
-              <button
-                class="btn btn-operator"
-                @click=${() => this.handleOperatorClick("+")}
-              >
-                +
-              </button>
+              <button class="btn" @click=${() => this.handleNumberClick('4')}>4</button>
+              <button class="btn" @click=${() => this.handleNumberClick('5')}>5</button>
+              <button class="btn" @click=${() => this.handleNumberClick('6')}>6</button>
+              <button class="btn btn-operator" @click=${() => this.handleOperatorClick('-')}>−</button>
+              <button class="btn" @click=${() => this.handleNumberClick('1')}>1</button>
+              <button class="btn" @click=${() => this.handleNumberClick('2')}>2</button>
+              <button class="btn" @click=${() => this.handleNumberClick('3')}>3</button>
+              <button class="btn btn-operator" @click=${() => this.handleOperatorClick('+')}>+</button>
 
-              <button
-                class="btn btn-zero"
-                @click=${() => this.handleNumberClick("0")}
-              >
-                0
-              </button>
+              <button class="btn btn-zero" @click=${() => this.handleNumberClick('0')}>0</button>
               <button class="btn" @click=${this.handleDecimal}>.</button>
-              <button class="btn btn-equals" @click=${this.handleEquals}>
-                =
-              </button>
+              <button class="btn btn-equals" @click=${this.handleEquals}>=</button>
             </div>
           </div>
         </div>
