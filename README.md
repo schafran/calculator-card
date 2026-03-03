@@ -76,10 +76,11 @@ yarn rollup     # Production build only
 
 ### Release Process
 
-1. Update version in `package.json`
-2. Commit changes
-3. Create a new release on GitHub
-4. GitHub Actions will automatically build and attach the JS file
+1. Create a new release on GitHub with a semver tag (e.g., `v1.0.0`)
+2. GitHub Actions will automatically:
+   - Validate the tag format
+   - Update version in `package.json` and `src/consts.ts`
+   - Build and attach the JS file to the release
 
 ## License
 
