@@ -35,43 +35,51 @@ type: custom:calculator-card
 title: My Card
 ```
 
-## Configuration Options
+### Configuration Options
 
-| Name    | Type   | Default      | Description |
-|---------|--------|--------------|-------------|
+| Name    | Type   | Default      | Description            |
+| ------- | ------ | ------------ | ---------------------- |
 | `type`  | string | **Required** | `custom:calculator-card` |
-| `title` | string | Optional     | Card title  |
+| `title` | string | Optional     | Card title             |
 
 ## Development
 
-### Prerequisites
+### Dev Container (Recommended)
 
-- Node.js (v18 or later)
-- npm
+The easiest way to develop is using the included dev container:
 
-### Setup
+1. Install [VS Code](https://code.visualstudio.com/) with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+2. Open the project folder in VS Code
+3. Press `Ctrl+Shift+P` → "Dev Containers: Reopen in Container"
+4. Wait for the container to build (first time takes ~2-3 minutes)
 
-```bash
-npm install
-```
-
-### Build
+### Commands
 
 ```bash
-npm run build
+yarn install    # Install dependencies (automatic on container creation)
+yarn start      # Dev server with hot reload (http://localhost:5000)
+yarn build      # Lint and build
+yarn lint       # Check code quality
+yarn rollup     # Production build only
 ```
 
-### Watch mode
+### Services
 
-```bash
-npm run watch
-```
+- **Dev Server**: http://localhost:5000 - Live reload development
+- **Home Assistant**: http://localhost:8123 - Test environment (user: `dev` / pass: `dev`)
 
-### Linting
+### Testing in Home Assistant
 
-```bash
-npm run lint
-```
+1. In Home Assistant, go to Settings → Dashboards
+2. Create a new Dashboard
+3. Add the card from the GUI
+
+### Release Process
+
+1. Update version in `package.json`
+2. Commit changes
+3. Create a new release on GitHub
+4. GitHub Actions will automatically build and attach the JS file
 
 ## License
 
