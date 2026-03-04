@@ -4,6 +4,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { HomeAssistant } from 'custom-card-helpers';
 import { CalculatorCardConfig } from './types';
 import { CARD_NAME } from './consts';
+import { getConfigForm } from './editor';
 
 console.info(
   `%c ${CARD_NAME.toUpperCase()} %c ${packageJson.version}`,
@@ -30,10 +31,8 @@ export class CalculatorCard extends LitElement {
   @state() private operator: string | null = null;
   @state() private waitingForOperand: boolean = false;
 
-  static getStubConfig(): CalculatorCardConfig {
-    return {
-      type: 'custom:calculator-card',
-    };
+  static getStubConfig(): Partial<CalculatorCardConfig> {
+    return {};
   }
 
   public setConfig(config: CalculatorCardConfig): void {
@@ -41,6 +40,10 @@ export class CalculatorCard extends LitElement {
       throw new Error('Invalid configuration');
     }
     this.config = config;
+  }
+
+  static getConfigForm() {
+    return getConfigForm();
   }
 
   public getCardSize(): number {
