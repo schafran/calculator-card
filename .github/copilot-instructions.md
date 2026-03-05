@@ -19,11 +19,9 @@ yarn lint
 ### Primary files
 
 - `src/calculator-card.ts` — main card implementation
-- `src/editor.ts` — visual editor (`LovelaceCardEditor`)
+- `src/editor.ts` — visual editor config form
 - `src/types.ts` — card config and type definitions
-- `src/action-handler-directive.ts` — tap/hold/double-tap directive
-- `src/localize/localize.ts` — localization helper
-- `src/localize/languages/en.json` and `src/localize/languages/nb.json` — translation files
+- `src/consts.ts` — constants
 - `rollup.config.js` and `rollup.config.dev.js` — production and dev build config
 
 ## Architecture and patterns
@@ -52,16 +50,13 @@ yarn lint
 ## Home Assistant integration
 
 - Use Home Assistant helpers and conventions from `custom-card-helpers`.
-- Ensure tap, hold, and double-tap actions are wired through existing action patterns.
 - Support unavailable/loading/error states gracefully.
 - Keep Lovelace config compatibility in mind when changing schema or defaults.
 
-## Localization and copy
+## Copy
 
-- Do not hardcode user-facing strings when a localize key should be used.
-- Add new translation keys to both language files currently in the repo (`en.json`, `nb.json`).
 - Keep copy concise, sentence case, and user-facing.
-- Favor consistent terminology across card UI and editor labels.
+- Favour consistent terminology across card UI and editor labels.
 
 ## Styling and UX
 
@@ -96,6 +91,6 @@ yarn lint
 
 - Breaking editor/card config parity
 - Adding untyped dynamic config access
-- Hardcoding text instead of localization keys
+- Hardcoding text that should be configurable
 - Overriding theme behavior with fixed styles
 - Changing output filenames or card tag without explicit request
