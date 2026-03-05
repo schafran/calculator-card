@@ -4,7 +4,7 @@
   "type": "module",
   "description": "A custom Home Assistant dashboard card",
   "main": "dist/calculator-card.js",
-  "module": "boilerplate-card.js",
+  "module": "dist/calculator-card.js",
   "scripts": {
     "start": "rollup -c rollup.config.dev.js --watch",
     "build": "yarn clean && yarn lint && yarn rollup",
@@ -22,12 +22,7 @@
   "repository": "git@github.com:schafran/calculator-card.git",
   "license": "MIT",
   "dependencies": {
-    "@lit-labs/context": "0.4.1",
-    "@lit-labs/motion": "1.0.7",
-    "@lit-labs/observers": "2.0.2",
-    "@lit-labs/virtualizer": "2.0.12",
     "custom-card-helpers": "2.0.0",
-    "home-assistant-js-websocket": "9.6.0",
     "lit": "^3.3.2"
   },
   "devDependencies": {
