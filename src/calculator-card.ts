@@ -59,6 +59,11 @@ export class CalculatorCard extends LitElement {
     }
   }
 
+  private formatResult(result: number): string {
+    if (!Number.isFinite(result)) return 'Error';
+    return String(parseFloat(result.toPrecision(12)));
+  }
+
   private handleOperatorClick(nextOperator: string): void {
     const inputValue = parseFloat(this.display);
 
@@ -66,7 +71,7 @@ export class CalculatorCard extends LitElement {
       this.firstOperand = inputValue;
     } else if (this.operator) {
       const result = this.calculate(this.firstOperand, inputValue, this.operator);
-      this.display = String(result);
+      this.display = this.formatResult(result);
       this.firstOperand = result;
     }
 
@@ -83,7 +88,7 @@ export class CalculatorCard extends LitElement {
       case '×':
         return firstOperand * secondOperand;
       case '÷':
-        return secondOperand !== 0 ? firstOperand / secondOperand : 0;
+        return firstOperand / secondOperand;
       default:
         return secondOperand;
     }
@@ -93,7 +98,7 @@ export class CalculatorCard extends LitElement {
     if (this.operator && this.firstOperand !== null) {
       const inputValue = parseFloat(this.display);
       const result = this.calculate(this.firstOperand, inputValue, this.operator);
-      this.display = String(result);
+      this.display = this.formatResult(result);
       this.firstOperand = null;
       this.operator = null;
       this.waitingForOperand = true;
@@ -154,79 +159,73 @@ export class CalculatorCard extends LitElement {
     `;
   }
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      .card-content {
-        padding: 16px;
-      }
-      .calculator {
-        max-width: 300px;
-        margin: 0 auto;
-      }
-      .display {
-        background-color: var(--primary-background-color);
-        color: var(--primary-text-color);
-        font-size: 32px;
-        font-weight: bold;
-        text-align: right;
-        padding: 20px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        border: 2px solid var(--divider-color);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-      }
-      .btn {
-        background-color: var(--card-background-color);
-        color: var(--primary-text-color);
-        border: 2px solid var(--divider-color);
-        border-radius: 8px;
-        font-size: 20px;
-        padding: 20px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .btn:hover {
-        background-color: var(--secondary-background-color);
-        transform: scale(1.05);
-      }
-      .btn:active {
-        transform: scale(0.95);
-      }
-      .btn-operator {
-        background-color: var(--primary-color);
-        color: var(--text-primary-color);
-      }
-      .btn-operator:hover {
-        background-color: var(--dark-primary-color);
-      }
-      .btn-clear {
-        background-color: var(--error-color);
-        color: var(--text-primary-color);
-        grid-column: span 3;
-      }
-      .btn-clear:hover {
-        background-color: var(--error-state-color);
-      }
-      .btn-equals {
-        background-color: var(--success-color);
-        color: var(--text-primary-color);
-      }
-      .btn-equals:hover {
-        background-color: var(--success-state-color);
-      }
-      .btn-zero {
-        grid-column: span 2;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      --calc-btn-radius: var(--ha-card-border-radius, 8px);
+      --calc-spacing: 8px;
+      --calc-btn-padding: 20px;
+      display: block;
+    }
+    .card-content {
+      padding: var(--calc-spacing) calc(var(--calc-spacing) * 2);
+    }
+    .calculator {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .display {
+      background-color: var(--primary-background-color);
+      color: var(--primary-text-color);
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: right;
+      padding: var(--calc-btn-padding);
+      margin-bottom: var(--calc-spacing);
+      border-radius: var(--calc-btn-radius);
+      border: 1px solid var(--divider-color);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--calc-spacing);
+    }
+    .btn {
+      background-color: var(--card-background-color);
+      color: var(--primary-text-color);
+      border: 1px solid var(--divider-color);
+      border-radius: var(--calc-btn-radius);
+      font-size: 1.25rem;
+      padding: var(--calc-btn-padding);
+      cursor: pointer;
+      transition:
+        filter 0.15s ease,
+        transform 0.1s ease;
+    }
+    .btn:hover {
+      filter: brightness(0.9);
+      transform: scale(1.05);
+    }
+    .btn:active {
+      transform: scale(0.95);
+    }
+    .btn-operator {
+      background-color: var(--primary-color);
+      color: var(--text-primary-color);
+    }
+    .btn-clear {
+      background-color: var(--error-color);
+      color: var(--text-primary-color);
+      grid-column: span 3;
+    }
+    .btn-equals {
+      background-color: var(--success-color);
+      color: var(--text-primary-color);
+    }
+    .btn-zero {
+      grid-column: span 2;
+    }
+  `;
 }
