@@ -32,14 +32,9 @@ jobs:
         run: |
           sed -i 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.version }}"/' package.json
 
-      - name: Bump version in consts.ts
-        run: |
-          sed -i 's/CARD_VERSION = "[^"]*"/CARD_VERSION = "${{ steps.version.outputs.version }}"/' src/consts.ts
-
-      - name: Verify versions match
+      - name: Verify version matches
         run: |
           PKG_VERSION=$(node -p "require('./package.json').version")
-          CONST_VERSION=$(grep -oP 'CARD_VERSION = "\K[^"]+' src/consts.ts)
           TAG_VERSION="${{ steps.version.outputs.version }}"
 
           if [[ "$PKG_VERSION" != "$TAG_VERSION" ]]; then
@@ -47,12 +42,7 @@ jobs:
             exit 1
           fi
 
-          if [[ "$CONST_VERSION" != "$TAG_VERSION" ]]; then
-            echo "Error: consts.ts version ($CONST_VERSION) doesn't match tag ($TAG_VERSION)"
-            exit 1
-          fi
-
-          echo "All versions match: $TAG_VERSION"
+          echo "Version matches: $TAG_VERSION"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
