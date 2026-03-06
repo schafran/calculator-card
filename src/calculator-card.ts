@@ -112,32 +112,6 @@ export class CalculatorCard extends LitElement {
     this.waitingForOperand = false;
   }
 
-  private handleBackspace(): void {
-    if (this.display === '0' || this.display === 'Error' || this.waitingForOperand) {
-      return;
-    }
-    if (this.display.length === 1 || (this.display.length === 2 && this.display.startsWith('-'))) {
-      this.display = '0';
-    } else {
-      this.display = this.display.slice(0, -1);
-    }
-  }
-
-  private handlePercentage(): void {
-    const value = parseFloat(this.display);
-    if (!Number.isFinite(value)) return;
-    this.display = this.formatResult(value / 100);
-  }
-
-  private handleSignToggle(): void {
-    if (this.display === '0' || this.display === 'Error') return;
-    if (this.display.startsWith('-')) {
-      this.display = this.display.slice(1);
-    } else {
-      this.display = '-' + this.display;
-    }
-  }
-
   private handleDecimal(): void {
     if (this.waitingForOperand) {
       this.display = '0.';
@@ -158,9 +132,7 @@ export class CalculatorCard extends LitElement {
           <div class="calculator">
             <div class="display">${this.display}</div>
             <div class="buttons">
-              <button class="btn btn-clear" @click=${this.handleClear}>AC</button>
-              <button class="btn btn-function" @click=${this.handleBackspace}>⌫</button>
-              <button class="btn btn-function" @click=${this.handlePercentage}>%</button>
+              <button class="btn btn-clear" @click=${this.handleClear}>C</button>
               <button class="btn btn-operator" @click=${() => this.handleOperatorClick('÷')}>÷</button>
 
               <button class="btn" @click=${() => this.handleNumberClick('7')}>7</button>
@@ -172,14 +144,12 @@ export class CalculatorCard extends LitElement {
               <button class="btn" @click=${() => this.handleNumberClick('5')}>5</button>
               <button class="btn" @click=${() => this.handleNumberClick('6')}>6</button>
               <button class="btn btn-operator" @click=${() => this.handleOperatorClick('-')}>−</button>
-
               <button class="btn" @click=${() => this.handleNumberClick('1')}>1</button>
               <button class="btn" @click=${() => this.handleNumberClick('2')}>2</button>
               <button class="btn" @click=${() => this.handleNumberClick('3')}>3</button>
               <button class="btn btn-operator" @click=${() => this.handleOperatorClick('+')}>+</button>
 
-              <button class="btn btn-function" @click=${this.handleSignToggle}>+/−</button>
-              <button class="btn" @click=${() => this.handleNumberClick('0')}>0</button>
+              <button class="btn btn-zero" @click=${() => this.handleNumberClick('0')}>0</button>
               <button class="btn" @click=${this.handleDecimal}>.</button>
               <button class="btn btn-equals" @click=${this.handleEquals}>=</button>
             </div>
@@ -248,14 +218,14 @@ export class CalculatorCard extends LitElement {
     .btn-clear {
       background-color: var(--error-color);
       color: var(--text-primary-color);
-    }
-    .btn-function {
-      background-color: var(--secondary-background-color);
-      color: var(--primary-text-color);
+      grid-column: span 3;
     }
     .btn-equals {
       background-color: var(--success-color);
       color: var(--text-primary-color);
+    }
+    .btn-zero {
+      grid-column: span 2;
     }
   `;
 }
