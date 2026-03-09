@@ -4,6 +4,10 @@ export const configSchema = [
     selector: { text: {} },
   },
   {
+    name: 'entity_id',
+    selector: { entity: { domain: 'input_number' } },
+  },
+  {
     name: 'color_numeral',
     selector: { ui_color: {} },
   },

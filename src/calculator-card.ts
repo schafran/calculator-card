@@ -1,5 +1,5 @@
 import * as packageJson from '../package.json';
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { HomeAssistant } from 'custom-card-helpers';
 import { CalculatorCardConfig } from './types';
@@ -112,6 +112,7 @@ export class CalculatorCard extends LitElement {
   @state() private firstOperand: number | null = null;
   @state() private operator: string | null = null;
   @state() private waitingForOperand: boolean = false;
+  @state() private stateRestored: boolean = false;
 
   static getStubConfig(): Partial<CalculatorCardConfig> {
     return {};
@@ -130,6 +131,20 @@ export class CalculatorCard extends LitElement {
 
   public getCardSize(): number {
     return 3;
+  }
+
+  protected updated(changedProps: PropertyValues): void {
+    super.updated(changedProps);
+    if (!this.stateRestored && this.config?.entity_id && this.hass) {
+      const entity = this.hass.states[this.config.entity_id];
+      if (entity) {
+        const value = parseFloat(entity.state);
+        if (!isNaN(value)) {
+          this.display = String(value);
+        }
+      }
+      this.stateRestored = true;
+    }
   }
 
   private handleNumberClick(num: string): void {
@@ -184,6 +199,18 @@ export class CalculatorCard extends LitElement {
       this.firstOperand = null;
       this.operator = null;
       this.waitingForOperand = true;
+      this.saveToEntity();
+    }
+  }
+
+  private saveToEntity(): void {
+    if (!this.config.entity_id || !this.hass) return;
+    const value = parseFloat(this.display);
+    if (!isNaN(value)) {
+      this.hass.callService('input_number', 'set_value', {
+        entity_id: this.config.entity_id,
+        value: value,
+      });
     }
   }
 
