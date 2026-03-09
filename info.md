@@ -39,3 +39,7 @@ title: Calculator
 |------|------|---------|-------------|
 | `type` | string | **Required** | `custom:calculator-card` |
 | `title` | string | Optional | Card title |
+| `entity_id` | string | Optional | `input_number` entity to persist result |
+| `color_numeral` | string | Optional | Colour for number buttons |
+| `color_function` | string | Optional | Colour for function buttons |
+| `color_operator` | string | Optional | Colour for operator buttons |
