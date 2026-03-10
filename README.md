@@ -37,10 +37,26 @@ title: My Card
 
 ### Configuration Options
 
-| Name    | Type   | Default      | Description            |
-| ------- | ------ | ------------ | ---------------------- |
-| `type`  | string | **Required** | `custom:calculator-card` |
-| `title` | string | Optional     | Card title             |
+| Name             | Type   | Default      | Description                                                    |
+| ---------------- | ------ | ------------ | -------------------------------------------------------------- |
+| `type`           | string | **Required** | `custom:calculator-card`                                       |
+| `title`          | string | Optional     | Card title                                                     |
+| `entity_id`      | string | Optional     | `input_number` entity to persist result (restores on load)     |
+| `color_numeral`  | string | Optional     | Colour for number buttons (hex or HA theme colour)             |
+| `color_function` | string | Optional     | Colour for function buttons (AC, %, ⌫)                         |
+| `color_operator` | string | Optional     | Colour for operator buttons (+, −, ×, ÷, =)                    |
+
+### State Persistence
+
+To persist the calculator result across refreshes, create an `input_number` helper and configure it:
+
+```yaml
+type: custom:calculator-card
+title: Calculator
+entity_id: input_number.calculator_value
+```
+
+The value is restored on load and saved when pressing equals.
 
 ## Development
 
